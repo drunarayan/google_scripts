@@ -55,15 +55,20 @@ function dailies() {
     var UBS =sheet.getRange("B2").getValue();
     var SCH =sheet.getRange("B3").getValue();
     var HSA =sheet.getRange("B5").getValue();
-    var STK =sheet.getRange("B20").getValue();
-    var BND =sheet.getRange("B21").getValue();
-    var TCS =sheet.getRange("B23").getValue();
-    var GLD =sheet.getRange("B24").getValue();
+    var GLD =sheet.getRange("B23").getValue();
     var CCB =sheet.getRange("B27").getValue();
 
     let holds  = SpreadsheetApp.getActive().getSheetByName('holdings')
-    var MGS =holds.getRange("S164").getValue();
-    var CSH =holds.getRange("B7").getValue();
+    var MGS =holds.getRange("S210").getValue();
+    var CSH =holds.getRange("Y221").getValue();
+    var STK =holds.getRange("Z218").getValue();
+    var BND =holds.getRange("Y218").getValue();
+    var IFX =holds.getRange("Y222").getValue();
+    var IEQ =holds.getRange("Z222").getValue();
+    var ITL =holds.getRange("W210").getValue();
+    var TIN =holds.getRange("Y223").getValue();
+    var TCS =sheet.getRange("Y224").getValue()+CSH;
+
 
     var replace = false;;
     var date2 = new Date();
@@ -75,10 +80,10 @@ function dailies() {
       date2.getDate() === ODTE.getDate()) replace = true;
     if (replace) {
       Logger.log("Dates are SAME, Replacing Dailies row!");
-      rowdata = [[ODTE, TOT,TOT-YTOT,(TOT-YTOT)/YTOT,UBS,SCH,HSA,CSH,STK,BND,TCS,GLD,SPX,(SPX-YSPX)/YSPX,MGS,CCB,0,0,0,0,0]]
+      rowdata = [[ODTE, TOT,TOT-YTOT,(TOT-YTOT)/YTOT,UBS,SCH,HSA,CSH,STK,BND,TCS,GLD,SPX,(SPX-YSPX)/YSPX,MGS,CCB,IEQ,IFX,ITL,(IEQ-ITL)/TIN,IFX/TIN,ITL/TIN,TIN]]
     } else {
       tgtsheet.insertRowBefore(2);
-      rowdata = [[date2, TOT,TOT-OTOT,(TOT-OTOT)/OTOT,UBS,SCH,HSA,CSH,STK,BND,TCS,GLD,SPX,(SPX-OSPX)/OSPX,MGS,CCB,0,0,0,0,0]]
+      rowdata = [[date2, TOT,TOT-OTOT,(TOT-OTOT)/OTOT,UBS,SCH,HSA,CSH,STK,BND,TCS,GLD,SPX,(SPX-OSPX)/OSPX,MGS,CCB,IEQ,IFX,ITL,(IEQ-ITL)/TIN,IFX/TIN,ITL/TIN,TIN]]
     }
     range.offset(0,0).setValues(rowdata);
 }
